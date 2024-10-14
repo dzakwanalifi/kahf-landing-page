@@ -4,7 +4,10 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Star, ShoppingCart, Menu, X, ChevronDown, ChevronUp, Instagram, Twitter, Droplet, Shield, Zap, Leaf, Wind, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Slider from "react-slick";
+import dynamic from 'next/dynamic'
+
+// Dynamically import Slider to avoid 'self is not defined' error
+const Slider = dynamic(() => import("react-slick"), { ssr: false })
 
 // Tambahkan import CSS untuk react-slick
 import "slick-carousel/slick/slick.css";
