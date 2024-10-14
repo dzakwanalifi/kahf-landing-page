@@ -4,6 +4,16 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Tambahkan konfigurasi ini untuk mengatasi masalah dengan 'self'
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
 }
 
 module.exports = nextConfig
