@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   // Tambahkan atau timpa metadata global di sini jika diperlukan
 };
 
+export const runtime = "edge";
+
 export default function RootLayout({
   children,
 }: Readonly<{
