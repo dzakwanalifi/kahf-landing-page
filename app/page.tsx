@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Star, ShoppingCart, ChevronRight, Menu, X, Check, ChevronDown, ChevronUp, Instagram, Facebook, Twitter, Droplet, Shield, Zap, Leaf, Wind, Sparkles } from 'lucide-react'
+import { Star, ShoppingCart, Menu, X, ChevronDown, ChevronUp, Instagram, Twitter, Droplet, Shield, Zap, Leaf, Wind, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Slider from "react-slick";
 
@@ -496,7 +496,7 @@ export default function KahfLandingPage() {
                         <p className="text-sm text-gray-600">{testimonial.role}</p>
                       </div>
                     </div>
-                    <p className="text-gray-700 italic">"{testimonial.testimonial}"</p>
+                    <p className="text-gray-700 italic">&quot;{testimonial.testimonial}&quot;</p>
                   </div>
                 </motion.div>
               ))}
