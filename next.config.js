@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Hapus atau komentari baris berikut
+  // output: 'export',
   images: {
     unoptimized: true,
   },

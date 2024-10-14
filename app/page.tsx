@@ -9,11 +9,12 @@ import dynamic from 'next/dynamic'
 // Dynamically import Slider to avoid 'self is not defined' error
 const Slider = dynamic(() => import("react-slick"), { ssr: false })
 
-// Tambahkan import CSS untuk react-slick
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 export default function KahfLandingPage() {
+  useEffect(() => {
+    import("slick-carousel/slick/slick.css");
+    import("slick-carousel/slick/slick-theme.css");
+  }, []);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null)
