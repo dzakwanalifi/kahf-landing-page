@@ -14,6 +14,10 @@ const nextConfig = {
     }
     return config;
   },
+  optimizeCss: true, // Tambahkan ini
+  experimental: {
+    css: true,
+  },
 }
 
 module.exports = nextConfig

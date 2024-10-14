@@ -6,8 +6,10 @@ import { Star, ShoppingCart, Menu, X, ChevronDown, ChevronUp, Instagram, Twitter
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 
-// Dynamically import Slider to avoid 'self is not defined' error
-const Slider = dynamic(() => import("react-slick"), { ssr: false })
+const Slider = dynamic(() => import("react-slick").then((mod) => mod.default), {
+  ssr: false,
+  loading: () => <p>Loading...</p>
+});
 
 export default function KahfLandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -326,28 +328,30 @@ export default function KahfLandingPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="w-full max-w-md mx-auto" // Tambahkan max-width dan center
             >
-              <Slider {...sliderSettings}>
-                {featuredProduct.images.map((image, index) => (
-                  <div key={index} className="outline-none aspect-square">
-                    <Image 
-                      src={image} 
-                      alt={`${featuredProduct.name} - Image ${index + 1}`} 
-                      width={400} 
-                      height={400} 
-                      className="rounded-lg shadow-lg object-cover w-full h-full"
-                    />
+              {typeof window !== 'undefined' && (
+                <Slider {...sliderSettings}>
+                  {featuredProduct.images.map((image, index) => (
+                    <div key={index} className="outline-none aspect-square">
+                      <Image 
+                        src={image} 
+                        alt={`${featuredProduct.name} - Image ${index + 1}`} 
+                        width={400} 
+                        height={400} 
+                        className="rounded-lg shadow-lg object-cover w-full h-full"
+                      />
+                    </div>
+                  ))}
+                  <div className="outline-none aspect-square">
+                    <video
+                      src={featuredProduct.video}
+                      controls
+                      className="w-full h-full rounded-lg shadow-lg object-cover"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
-                ))}
-                <div className="outline-none aspect-square">
-                  <video
-                    src={featuredProduct.video}
-                    controls
-                    className="w-full h-full rounded-lg shadow-lg object-cover"
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </Slider>
+                </Slider>
+              )}
             </motion.div>
           </div>
         </div>
