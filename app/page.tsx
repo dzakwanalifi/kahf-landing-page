@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Star, ShoppingCart, Menu, X, ChevronDown, ChevronUp, Instagram, Twitter, Droplet, Shield, Zap, Leaf, Wind, Sparkles } from 'lucide-react'
+import { Star, ShoppingCart, Menu, X, ChevronDown, ChevronUp, Instagram, Twitter, Droplet, Shield, Zap, Leaf, Wind, Sparkles, Github } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 
@@ -626,6 +626,9 @@ export default function KahfLandingPage() {
                 </a>
                 <a href="https://twitter.com/kahfeveryday" className="hover:text-gray-300" aria-label="Twitter">
                   <Twitter className="w-6 h-6" />
+                </a>
+                <a href="https://github.com/dzakwanalifi/kahf-landing-page" className="hover:text-gray-300" aria-label="GitHub">
+                  <Github className="w-6 h-6" />
                 </a>
               </div>
             </div>
