@@ -15,10 +15,12 @@ export default function KahfLandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
   const productsRef = useRef<HTMLDivElement>(null)
   const testimonialsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setIsMounted(true)
     const handleScroll = () => {
       const sections = ['home', 'products', 'about', 'testimonials']
       const currentSection = sections.find(section => {
@@ -248,6 +250,40 @@ export default function KahfLandingPage() {
             </button>
           </div>
         </header>
+
+        {/* Mobile Menu */}
+        {isMounted && (
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="md:hidden bg-white shadow-lg"
+              >
+                <nav className="container py-4">
+                  <ul className="space-y-4">
+                    {['Home', 'Products', 'About', 'Testimonials'].map((item) => (
+                      <li key={item}>
+                        <button
+                          onClick={() => {
+                            scrollToSection(item.toLowerCase());
+                            setIsMenuOpen(false);
+                          }}
+                          className={`text-[#3c4536] hover:text-[#4f553d] transition-colors ${
+                            activeSection === item.toLowerCase() ? 'font-bold' : ''
+                          }`}
+                        >
+                          {item}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
 
       {/* Hero Section */}
@@ -434,45 +470,49 @@ export default function KahfLandingPage() {
       </section>
 
       {/* Kahf Product Collection */}
-      <section className="py-20 px-4 md:px-8">
-        <div className="container">
-          <h2 className="text-3xl font-bold mb-10 text-center">Koleksi Produk Kahf</h2>
-          <div className="relative">
-            <div
-              ref={productsRef}
-              className="flex space-x-6 overflow-x-auto pb-6 snap-x snap-mandatory"
-            >
-              {products.map((product, index) => (
-                <motion.div
-                  key={index}
-                  className="flex-shrink-0 w-64 snap-start"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <a href={product.link} target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                      <Image src={product.image} alt={product.name} width={256} height={256} className="w-full h-64 object-cover" />
-                      <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-                        <div className="flex items-center mb-2">
-                          <span className="text-xl font-bold text-[#4f553d] mr-2">Rp{product.price.toLocaleString()}</span>
-                          <span className="text-sm line-through text-gray-500">Rp{product.originalPrice.toLocaleString()}</span>
+      {isMounted && (
+        <section className="py-20 px-4 md:px-8">
+          <div className="container">
+            <h2 className="text-3xl font-bold mb-10 text-center">Koleksi Produk Kahf</h2>
+            <div className="relative">
+              <div
+                ref={productsRef}
+                className="flex space-x-6 overflow-x-auto pb-6 snap-x snap-mandatory"
+              >
+                {products.map((product, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex-shrink-0 w-64 snap-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <a href={product.link} target="_blank" rel="noopener noreferrer" className="block h-full">
+                      <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                        <div className="h-64 overflow-hidden">
+                          <Image src={product.image} alt={product.name} width={256} height={256} className="w-full h-full object-cover" />
                         </div>
-                        <div className="flex items-center">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="ml-1 text-sm">{product.rating}</span>
-                          <span className="ml-2 text-xs text-gray-500">({product.reviews.toLocaleString()} ulasan)</span>
+                        <div className="p-4 flex flex-col flex-grow">
+                          <h3 className="text-lg font-semibold mb-2 line-clamp-2">{product.name}</h3>
+                          <div className="flex items-center mb-2">
+                            <span className="text-xl font-bold text-[#4f553d] mr-2">Rp{product.price.toLocaleString()}</span>
+                            <span className="text-sm line-through text-gray-500">Rp{product.originalPrice.toLocaleString()}</span>
+                          </div>
+                          <div className="flex items-center mt-auto">
+                            <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                            <span className="ml-1 text-sm">{product.rating}</span>
+                            <span className="ml-2 text-xs text-gray-500">({product.reviews.toLocaleString()} ulasan)</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </motion.div>
-              ))}
+                    </a>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Testimonials Section */}
       <section id="testimonials" className="py-20 px-4 md:px-8 bg-gray-100">
